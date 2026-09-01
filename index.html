@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grigorii Barakhsin</title>
+<meta name="description" content="Researcher at the ITMO University AI Center, working on evaluation and observability of LLM multi-agent systems.">
+<style>
+  :root{
+    --bg:#fdfdfc; --fg:#1a1a19; --muted:#5c5c58; --rule:#e3e3df;
+    --accent:#1f3864; --code:#f4f4f1;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#141413; --fg:#eceae4; --muted:#a3a099; --rule:#2e2e2b;
+           --accent:#9db8e8; --code:#1e1e1c; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--fg);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased}
+  .wrap{max-width:44rem;margin:0 auto;padding:3.5rem 1.25rem 5rem}
+  h1{font-size:1.9rem;line-height:1.2;margin:0 0 .3rem;letter-spacing:-.01em}
+  .role{color:var(--muted);margin:0 0 .9rem}
+  .links{color:var(--muted);font-size:.93rem;margin:0 0 2.4rem}
+  .links a{color:var(--accent)}
+  a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+  a:hover{border-bottom-color:currentColor}
+  h2{font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;
+     color:var(--muted);font-weight:600;margin:2.6rem 0 1rem;
+     padding-bottom:.5rem;border-bottom:1px solid var(--rule)}
+  .lede{font-size:1.06rem;margin:0 0 1.1rem}
+  .item{margin:0 0 1.6rem}
+  .item h3{font-size:1rem;margin:0 0 .25rem;font-weight:650}
+  .meta{color:var(--muted);font-size:.88rem;margin:0 0 .45rem}
+  .item p{margin:0}
+  ul{margin:.5rem 0 0;padding-left:1.1rem}
+  li{margin:.3rem 0}
+  .num{font-variant-numeric:tabular-nums;font-weight:650}
+  footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--rule);
+         color:var(--muted);font-size:.88rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Grigorii Barakhsin</h1>
+  <p class="role">Researcher, ITMO University AI Center. Saint Petersburg.</p>
+  <p class="links">
+    <a href="mailto:barakhsin@gmail.com">barakhsin@gmail.com</a> ·
+    <a href="https://scholar.google.com/citations?user=NCRfb74AAAAJ">Google Scholar</a> ·
+    <a href="https://github.com/barakhsin">GitHub</a> ·
+    <a href="https://linkedin.com/in/gregory-barakhsin">LinkedIn</a>
+  </p>
+
+  <p class="lede">Agent oversight assumes that when a system fails, the record it
+  left is enough to tell you so. I measure whether that holds.</p>
+
+  <p>Mostly it does not. Established LLM judges report a failure on clean agent
+  traces between <span class="num">34%</span> and <span class="num">78%</span> of
+  the time. And <span class="num">84%</span> of a trace by volume, the part
+  holding prompts and retrieved documents, contributes nothing at all to locating
+  a failure.</p>
+
+  <h2>Research</h2>
+
+  <div class="item">
+    <h3>What Must You Log? Minimal Sufficient Trace Signals for Agent Failure Attribution</h3>
+    <p class="meta">First author, with Anna Kalyuzhnaya.</p>
+    <p>What an execution trace has to retain for failure attribution, measured
+    rather than assumed. Holding a benchmark's taxonomy, judge prompt and scoring
+    code fixed, I varied only which trace fields the judge received.</p>
+    <ul>
+      <li>Across ten public agent-failure corpora, median trace size spans a
+        163-fold range, and individual traces span a factor of 9,180. Only four
+        of the ten separate model input from output, with no published evidence
+        behind either choice.</li>
+      <li>Localisation depends on one content field, what the agent itself wrote.
+        Withholding it collapses accuracy from 0.39 to 0.06 on one judge and from
+        0.37 to 0.11 on a second.</li>
+      <li>Keeping that field with step identifiers and two near-free metadata
+        fields recovers full-trace accuracy at <span class="num">2.33%</span> of
+        the raw token volume.</li>
+      <li>The replayed model context never helps localisation, because 85.7% of
+        it repeats text already recorded elsewhere in the same trace.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <h3>TraceJudgeBench: A Unified Benchmark for Validating LLM-as-a-Judge on Agent Execution Traces</h3>
+    <p class="meta">Main contributor.</p>
+    <p>877 agent execution traces unified from ten judge-validation datasets under
+    a single two-level taxonomy, with native trace representations preserved.</p>
+    <ul>
+      <li>Clean-trace recognition is a systematic weakness: false-error rates of
+        34% to 78% across established judges, and 100% for a decomposed ensemble
+        run without abstention.</li>
+      <li>Length is the hidden variable. Every judge degrades a further 37 to 50
+        points on long traces, which a length-concentrated corpus could not
+        expose.</li>
+      <li>Abstention in verdict aggregation, rather than decomposition, recovers
+        most of the gap.</li>
+    </ul>
+  </div>
+
+  <div class="item">
+    <h3>AutoJudge: Automatic Generation of LLM-Based Judges from Execution Traces</h3>
+    <p class="meta">Contributing author. Workshop on Failure Modes of Agentic AI at ICML 2026.
+      <a href="https://openreview.net/forum?id=wVp0IhPVHx">OpenReview</a></p>
+    <p>A MetaAgent synthesises an evaluation pipeline per trace instead of reusing
+    one fixed judge, with full-trace and summary modes for long inputs.</p>
+  </div>
+
+  <div class="item">
+    <h3>Towards Design of an Automated Judge for Multi-Agent Systems</h3>
+    <p class="meta">Contributing author. AAAI 2026 TrustAgent Workshop.</p>
+    <p>Two-level evaluation methodology, agent and system. F1 0.85 on
+    out-of-distribution TRAIL.</p>
+  </div>
+
+  <h2>Code</h2>
+  <div class="item">
+    <h3><a href="https://github.com/sb-ai-lab/MASeval">MASeval</a></h3>
+    <p class="meta">Contributor. BSD-3-Clause.</p>
+    <p>A Python library for automated evaluation of multi-agent systems, built on
+    Pydantic AI. My contributions are judge and verifier implementation, including
+    a no-ground-truth task-completion verifier, plus ablation tooling and
+    reporting over the Who&amp;When corpus.</p>
+  </div>
+
+  <h2>Background</h2>
+  <p>I came into research from industry rather than through a PhD. Before ITMO I
+  was an AI product manager at a regional bank, where I led the team that shipped
+  computer-vision monitoring on municipal cameras to 92% accuracy against an 85%
+  requirement, and before that the founding ML engineer on an environmental
+  monitoring system I finished alone after the rest of the team left. That is
+  where the interest in this problem comes from: a monitor nobody can act on is
+  not a monitor.</p>
+
+  <footer>
+    Preprints available on request. Reviewer, NeurIPS 2026 Workshop on Who
+    Verifies the Agents?
+  </footer>
+
+</div>
+</body>
+</html>
