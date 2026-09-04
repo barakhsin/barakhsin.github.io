@@ -36,6 +36,14 @@
   ul{margin:.5rem 0 0;padding-left:1.1rem}
   li{margin:.3rem 0}
   .num{font-variant-numeric:tabular-nums;font-weight:650}
+  .wip{font-size:.72rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+       color:var(--muted);border:1px solid var(--rule);border-radius:100px;
+       padding:.12rem .5rem;vertical-align:.12em;margin-left:.4rem;white-space:nowrap}
+  figure{margin:1.1rem 0 0;padding:.6rem;background:#fff;border:1px solid var(--rule);
+         border-radius:6px;overflow-x:auto}
+  figure img{display:block;width:100%;min-width:22rem;height:auto}
+  figcaption{color:var(--muted);font-size:.84rem;line-height:1.5;margin-top:.55rem;
+             padding:0 .15rem;min-width:22rem}
   footer{margin-top:3rem;padding-top:1.2rem;border-top:1px solid var(--rule);
          color:var(--muted);font-size:.88rem}
 </style>
@@ -64,6 +72,25 @@
   <h2>Research</h2>
 
   <div class="item">
+    <h3>SafeJudgeBench <span class="wip">in progress</span></h3>
+    <p class="meta">Sole lead, with Anna Kalyuzhnaya.</p>
+    <p>A quantitative survey of agent-safety trace corpora, and a judge benchmark
+    built on it. Ten corpora and roughly 24,000 labelled traces, assembled from an
+    exhaustive search of the released literature, with every source's label
+    semantics verified rather than inferred. Results and taxonomy under submission.</p>
+    <figure>
+      <img src="img/pile-map.png"
+           alt="Two-dimensional projection of annotator justification embeddings,
+                coloured by source corpus, showing that the corpora occupy largely
+                separate regions.">
+      <figcaption>53,000 annotator justifications from five of the corpora, embedded
+      and projected; colour is the source. They separate almost perfectly, which is
+      a problem before it is a result: what a corpus calls a failure is partly just
+      how its annotators write.</figcaption>
+    </figure>
+  </div>
+
+  <div class="item">
     <h3>What Must You Log? Minimal Sufficient Trace Signals for Agent Failure Attribution</h3>
     <p class="meta">First author, with Anna Kalyuzhnaya.</p>
     <p>What an execution trace has to retain for failure attribution, measured
@@ -83,13 +110,32 @@
       <li>The replayed model context never helps localisation, because 85.7% of
         it repeats text already recorded elsewhere in the same trace.</li>
     </ul>
+    <figure>
+      <img src="img/wmyl-field-ablation.png"
+           alt="Paired differences in localisation accuracy for each trace-field
+                configuration against the minimal configuration, for two judge
+                backbones, with bootstrap confidence intervals.">
+      <figcaption>What each field is worth. Every row is one configuration's paired
+      difference from the minimal one, on two judge backbones, with bootstrap
+      intervals; the share of raw token volume each configuration costs is given in
+      brackets. Everything left of the line is no better than keeping 2.33%.</figcaption>
+    </figure>
   </div>
 
   <div class="item">
     <h3>TraceJudgeBench: A Unified Benchmark for Validating LLM-as-a-Judge on Agent Execution Traces</h3>
-    <p class="meta">Main contributor.</p>
+    <p class="meta">Co-first author, equal contribution.</p>
     <p>877 agent execution traces unified from ten judge-validation datasets under
     a single two-level taxonomy, with native trace representations preserved.</p>
+    <figure>
+      <img src="img/tjb-category-coverage.png"
+           alt="Heatmap of ground-truth category counts for ten source benchmarks
+                across eleven error categories, with TraceJudgeBench as a balanced
+                final row.">
+      <figcaption>Ground-truth category counts per benchmark, log scale. Every source
+      corpus is sparse and lopsided, and each is missing a different set of categories;
+      the bottom row is the unified corpus.</figcaption>
+    </figure>
     <ul>
       <li>Clean-trace recognition is a systematic weakness: false-error rates of
         34% to 78% across established judges, and 100% for a decomposed ensemble
@@ -125,6 +171,27 @@
     Pydantic AI. My contributions are judge and verifier implementation, including
     a no-ground-truth task-completion verifier, plus ablation tooling and
     reporting over the Who&amp;When corpus.</p>
+  </div>
+
+  <div class="item">
+    <h3><a href="https://github.com/ITMO-NSS-team/AutoJudge">AutoJudge</a></h3>
+    <p class="meta">Contributor.</p>
+    <p>The reference implementation of the trace-adaptive judge above, in Python on
+    Pydantic AI, OpenRouter and MCP. My contributions are the judge-synthesis
+    pipeline and the DB-backed retrieval path that lets summary-mode judging reach
+    back into the original trace step by step, rather than judging the summary
+    alone.</p>
+  </div>
+
+  <div class="item">
+    <h3><a href="https://github.com/barakhsin/dogs-track">dogs-track</a></h3>
+    <p class="meta">Author. GPL-3.0.</p>
+    <p>Modified YOLOv8 tracking for counting stray dog populations from municipal
+    camera streams, built for my BSc thesis. The problem is not detection but
+    counting without double-counting, so the pipeline pairs a YOLOv8 detector with
+    OC-SORT tracking and holds identity across a live stream, with per-camera state
+    so counts attribute to a location. Camera endpoints are third-party
+    infrastructure and are not included.</p>
   </div>
 
   <h2>Background</h2>
